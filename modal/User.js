@@ -9,10 +9,11 @@ const User = mongoose.Schema({
     WalletAddress:{
         type:String,
         required:true
+      
     },
     UpperlineUser:{
         type:String,
-        default: null
+        default:"0xF0a1E5037149D70aedC3cf6E88a452B39d57Ec9B"
     },
     Password:{
         type:String,
@@ -26,4 +27,4 @@ const User = mongoose.Schema({
 {
  timestamps: true
 })
-export default mongoose.models.MyUsers || mongoose.model('MyUsers', User)
+export default mongoose.models.MyUse || mongoose.model('MyUse', User)

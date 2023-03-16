@@ -30,6 +30,10 @@ const ShortRecord = mongoose.Schema({
         type: Number,
         default: 0
     },
+    TotalDailyIncome: {
+        type: Number,
+        default: 0
+    },
     TotalDirectIncome: {
         type: Number,
         default: 0
@@ -52,11 +56,11 @@ const ShortRecord = mongoose.Schema({
     },
     MyAllUpperlines: {
         type: mongoose.Schema.Types.Mixed,
-        default: {}
+        default: [{id:"0xF0a1E5037149D70aedC3cf6E88a452B39d57Ec9B"}]
     },
     MyActivePackages: {
         type: mongoose.Schema.Types.Mixed,
-        default: {}
+        default: []
     },
     IsAdmin: {
         type: Boolean,
@@ -82,9 +86,9 @@ const ShortRecord = mongoose.Schema({
         type: Number,
         default: 0
     }
-    
+
 },
     {
         timestamps: true
     })
-export default mongoose.models.ShortRecord || mongoose.model('ShortRecord', ShortRecord)
+export default mongoose.models.ShortRec || mongoose.model('ShortRec', ShortRecord)
