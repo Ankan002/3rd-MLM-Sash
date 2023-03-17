@@ -53,7 +53,7 @@ const PackageRecord = mongoose.Schema({
     expireAt: { 
         type: Date,
         default: Date.now,
-        expires: 1800 
+        expires: 43200 
     }
 
 },
@@ -61,4 +61,4 @@ const PackageRecord = mongoose.Schema({
         timestamps: true
     },
 )
-export default mongoose.models.PackageRecor || mongoose.model('PackageRecor', PackageRecord)
+export default mongoose.models.MyPackageRec || mongoose.model('MyPackageRec', PackageRecord)

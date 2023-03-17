@@ -26,7 +26,14 @@ export const GiveRoyaltyBonus = async (req, res) => {
 
     let Transaction_Array = []
 
-    const FindRecords = await RoyaltyBonusEligible.findOne().lean().exec();
+
+    
+    const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
+    
+    const FindRecords = await RoyaltyBonusEligible.findOne({createdAt: { $gt: fiveMinutesAgo }}).lean().exec();
+    console.log(FindRecords)
+
+    if (!FindRecords) return res.status(500).json("no data found")
 
     const Find_All_50_Purchase = await PlanInvoice.find({ PackagePrice: "50" }).select("RecordOwner").lean().exec();
     const Find_All_100_Purchase = await PlanInvoice.find({ PackagePrice: "100" }).select("RecordOwner").lean().exec();

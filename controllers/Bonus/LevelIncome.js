@@ -27,7 +27,7 @@ export const LevelIncome = async (req, res) => {
     // 12:05 - 12:10
     const tenMinutesAgo = new Date(Date.now() - 50 * 60 * 1000); // calculating a Date object for 10 minutes ago
     // const oneMinuteAgo = new Date(Date.now() - 1 * 60 * 1000); // calculating a Date object for 1 minute ago
-    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000); // for 5 minutes
+    const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
 
 
     const FindDailyReward = await DailyReward.find({createdAt: { $gt: fiveMinutesAgo }}).lean();
