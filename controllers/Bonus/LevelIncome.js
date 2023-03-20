@@ -27,7 +27,7 @@ export const LevelIncome = async (req, res) => {
     // 12:05 - 12:10
     const tenMinutesAgo = new Date(Date.now() - 50 * 60 * 1000); // calculating a Date object for 10 minutes ago
     // const oneMinuteAgo = new Date(Date.now() - 1 * 60 * 1000); // calculating a Date object for 1 minute ago
-    const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
+    const fiveMinutesAgo = new Date(Date.now() - 5* 60 * 1000); // for 5 minutes
 
 
     const FindDailyReward = await DailyReward.find({createdAt: { $gt: fiveMinutesAgo }}).lean();
@@ -124,8 +124,8 @@ export const LevelIncome = async (req, res) => {
 
           let Loop_Level = index + 1
 
-          console.log("Loop_Level >=====> "+Loop_Level)
-          console.log("LevelsOpenForThisUser >=====> "+LevelsOpenForThisUser)
+          
+          
 
           if (Loop_Level > LevelsOpenForThisUser) continue
 
@@ -154,6 +154,8 @@ export const LevelIncome = async (req, res) => {
           ! MANAGING TRANSACTION REPORT
           */
 
+          console.log("Loop_Level => "+Loop_Level)
+
             Transaction_Array.push({
               RecordOwner:element.id,
               TransactionFrom:"Admin",
@@ -172,7 +174,7 @@ export const LevelIncome = async (req, res) => {
              await LevelReward.create({
 
               RecordOwner: element.id,
-              LevelEarned: LevelsOpenForThisUser,
+              LevelEarned: Loop_Level,
               CoinEarned: Number(Calculate_Max_Earning).toFixed(2),
               EarnedPackage: "package name",
               RewardFrom: RecordOwner

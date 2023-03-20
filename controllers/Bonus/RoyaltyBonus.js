@@ -191,11 +191,11 @@ export const RoyaltyBonus = async (req, res) => {
 
       // if (hit.MyActivePackages.length == 0) return
 
-      console.log(hit.MyActivePackages)
+      
 
       let PackageAmount = Math.max(...hit.MyActivePackages) // Checking User Highest Purchased Package
 
-      console.log(PackageAmount)
+      
 
       
       let This_User_Direct_Business = hit.MyDirectsTotalBusiness // Checking User ALL Direct Businesses
@@ -205,12 +205,8 @@ export const RoyaltyBonus = async (req, res) => {
 
 
         
-        
-        
-      if (This_User_Direct_Business > 0 && This_User_Direct_Business <= 5000) {
-        
+      if (This_User_Direct_Business > 5000) {        
         if (PackageAmount == 50) {
-
           Give_Reward_According_To_Package("50$ CLUB",hit.RecordOwner)
 
         } else if (PackageAmount == 100) {

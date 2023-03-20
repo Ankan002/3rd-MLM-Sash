@@ -28,10 +28,10 @@ export const GiveRoyaltyBonus = async (req, res) => {
 
 
     
-    const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
+    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000); // for 5 minutes
     
     const FindRecords = await RoyaltyBonusEligible.findOne({createdAt: { $gt: fiveMinutesAgo }}).lean().exec();
-    console.log(FindRecords)
+    
 
     if (!FindRecords) return res.status(500).json("no data found")
 
@@ -51,15 +51,21 @@ export const GiveRoyaltyBonus = async (req, res) => {
         
     if (Club50People > 0) {
 
+        
+
+
         let Total_People_In_50_Plan = Find_All_50_Purchase.length;
 
         let Commison_Added = 2
+
+
 
         let Total_Royality_Reward = Total_People_In_50_Plan * Commison_Added
         
         let Royalty_Reward_Per_Peson = Total_Royality_Reward / Club50People
         
         for (let index = 0; index < Find_All_50_Purchase.length; index++) {
+            console.log(index)
             const Id = Find_All_50_Purchase[index].RecordOwner
 
             await RoyaltyBonusReward.create({
@@ -91,7 +97,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
 
     if (Club100People > 0) {
 
-        console.log("came here")
+        
 
         let Total_People_In_100_Plan = Find_All_100_Purchase.length;
 
@@ -134,7 +140,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
 
     if (Club150People > 0) {
 
-        console.log("came here")
+        
 
         let Total_People_In_150_Plan = Find_All_150_Purchase.length;
 
@@ -176,7 +182,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
 
     if (Club200People > 0) {
 
-            console.log("came here")
+            
     
             let Total_People_In_200_Plan = Find_All_200_Purchase.length;
     
