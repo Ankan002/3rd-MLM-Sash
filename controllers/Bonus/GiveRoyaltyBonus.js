@@ -31,6 +31,9 @@ export const GiveRoyaltyBonus = async (req, res) => {
     const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000); // for 5 minutes
     
     const FindRecords = await RoyaltyBonusEligible.findOne({createdAt: { $gt: fiveMinutesAgo }}).lean().exec();
+
+
+    
     
 
     if (!FindRecords) return res.status(500).json("no data found")
@@ -64,9 +67,11 @@ export const GiveRoyaltyBonus = async (req, res) => {
         
         let Royalty_Reward_Per_Peson = Total_Royality_Reward / Club50People
         
-        for (let index = 0; index < Find_All_50_Purchase.length; index++) {
-            console.log(index)
-            const Id = Find_All_50_Purchase[index].RecordOwner
+        for (let index = 0; index < FindRecords.Club50Eligible.length; index++) {
+            
+            console.log(FindRecords.Club50Eligible[index])
+            const Id = FindRecords.Club50Eligible[index].ids
+
 
             await RoyaltyBonusReward.create({
                 RecordOwner:Id,
@@ -107,8 +112,8 @@ export const GiveRoyaltyBonus = async (req, res) => {
 
         let Royalty_Reward_Per_Peson = Total_Royality_Reward / Club100People
 
-        for (let index = 0; index < Find_All_100_Purchase.length; index++) {
-            const Id = Find_All_100_Purchase[index].RecordOwner
+        for (let index = 0; index < FindRecords.Club100Eligible.length; index++) {
+            const Id = FindRecords.Club100Eligible[index].ids
 
             await RoyaltyBonusReward.create({
                 RecordOwner:Id,
@@ -150,8 +155,8 @@ export const GiveRoyaltyBonus = async (req, res) => {
 
         let Royalty_Reward_Per_Peson = Total_Royality_Reward / Club150People
 
-        for (let index = 0; index < Find_All_100_Purchase.length; index++) {
-            const Id = Find_All_100_Purchase[index].RecordOwner
+        for (let index = 0; index < FindRecords.Club150Eligible.length; index++) {
+            const Id = FindRecords.Club150Eligible[index].ids
 
             await RoyaltyBonusReward.create({
                 RecordOwner:Id,
@@ -192,8 +197,8 @@ export const GiveRoyaltyBonus = async (req, res) => {
     
             let Royalty_Reward_Per_Peson = Total_Royality_Reward / Club200People
     
-            for (let index = 0; index < Find_All_200_Purchase.length; index++) {
-                const Id = Find_All_200_Purchase[index].RecordOwner
+            for (let index = 0; index < FindRecords.Club200Eligible.length; index++) {
+                const Id = FindRecords.Club200Eligible[index].ids
     
                 await RoyaltyBonusReward.create({
                     RecordOwner:Id,

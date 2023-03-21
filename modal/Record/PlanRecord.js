@@ -14,6 +14,10 @@ const PackageRecord = mongoose.Schema({
         type: String,
         required: true
     },
+    OwnerUpperline: {
+        type: String,
+        required: true
+    },
     PackageName: {
         type: String,
         required: true
@@ -61,4 +65,4 @@ const PackageRecord = mongoose.Schema({
         timestamps: true
     },
 )
-export default mongoose.models.MyPackageRec || mongoose.model('MyPackageRec', PackageRecord)
+export default mongoose.models.MyPackageRecs || mongoose.model('MyPackageRecs', PackageRecord)

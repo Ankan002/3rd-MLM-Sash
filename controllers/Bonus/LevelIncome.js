@@ -31,8 +31,7 @@ export const LevelIncome = async (req, res) => {
 
 
     const FindDailyReward = await DailyReward.find({createdAt: { $gt: fiveMinutesAgo }}).lean();
-
-      
+  
     // Going To Map All Daily Reward
 
     const dailyRewards = await Promise.all(
@@ -95,8 +94,6 @@ export const LevelIncome = async (req, res) => {
           
 
           if (DirectNumber > 0 && DirectNumber < 3) {
-
-
             LevelsOpenForThisUser = 1
             RewardPercentage = 10;
           } else if (DirectNumber >= 3 && DirectNumber < 5) {
@@ -107,19 +104,19 @@ export const LevelIncome = async (req, res) => {
             RewardPercentage = 10;
           } else if (DirectNumber == 6) {
             LevelsOpenForThisUser = 4
-            RewardPercentage = 0.6
+            RewardPercentage = 6
           } else if (DirectNumber == 7) {
             LevelsOpenForThisUser = 5
-            RewardPercentage = 0.6
+            RewardPercentage = 6
           } else if (DirectNumber == 8) {
             LevelsOpenForThisUser = 6
-            RewardPercentage = 0.2
+            RewardPercentage = 2
           } else if (DirectNumber == 9) {
             LevelsOpenForThisUser = 7
-            RewardPercentage = 0.2
+            RewardPercentage = 2
           } else if (DirectNumber == 10) {
-            LevelsOpenForThisUser = 7
-            RewardPercentage = 0.2
+            LevelsOpenForThisUser = 8
+            RewardPercentage = 2
           }
 
           let Loop_Level = index + 1
@@ -143,9 +140,19 @@ export const LevelIncome = async (req, res) => {
          const Get_Short_Record_Of_Level = await ShortRecord.findOne({RecordOwner:element.id})
          
          const Level_Record = parseFloat(Get_Short_Record_Of_Level.TotalLevelIncome)
+
+         
+         
+         
+
+
+         
          
          
          const Update_Value = Level_Record + Calculate_Max_Earning
+
+         
+         
          
          
           await ShortRecord.findByIdAndUpdate({_id:Get_Short_Record_Of_Level._id},{TotalLevelIncome:Update_Value})
@@ -154,7 +161,7 @@ export const LevelIncome = async (req, res) => {
           ! MANAGING TRANSACTION REPORT
           */
 
-          console.log("Loop_Level => "+Loop_Level)
+          
 
             Transaction_Array.push({
               RecordOwner:element.id,
