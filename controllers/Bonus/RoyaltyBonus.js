@@ -20,21 +20,20 @@ ShortRecord.createIndexes({ field1: 1 });
 */
 
 // THIS FUNCTION WILL BE RESPONSIBLE FOR GIVING REWARDS ACCORDING TO CLUBNAME
-function Give_Reward_According_To_Package(ClubName,id) {
+function Give_Reward_According_To_Package(ClubName, id) {
 
-  
 
   if (ClubName == "50$ CLUB") {
     Club50(id)
-  } else if(ClubName == "100$ CLUB") {
+  } else if (ClubName == "100$ CLUB") {
     Club100(id)
-  }else if(ClubName == "150$ CLUB") {
+  } else if (ClubName == "150$ CLUB") {
     Club150(id)
-  }else if(ClubName == "200$ CLUB") {
+  } else if (ClubName == "200$ CLUB") {
     Club200(id)
-  }else if(ClubName == "500$ CLUB") {
+  } else if (ClubName == "500$ CLUB") {
     Club500(id)
-  }else if(ClubName == "1000$ CLUB") {
+  } else if (ClubName == "1000$ CLUB") {
     Club1000(id)
   }
 
@@ -42,138 +41,146 @@ function Give_Reward_According_To_Package(ClubName,id) {
 
 // CLUB 50 PEOPLE WILL COME HERE
 
-const Club50 = async(id) =>{
+const Club50 = async (id) => {
+
+  console.log(id)
+
+
   const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
 
 
- const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({createdAt: { $gt: fiveMinutesAgo }}).select("_id Club50Eligible").lean().exec()
+  const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club50Eligible").lean().exec()
 
-  let Old_50$_Record = Get_Record_For_50$_Club == null ?  []  :  Get_Record_For_50$_Club.Club50Eligible
 
-  Old_50$_Record.push({ids:id})
 
-  Get_Record_For_50$_Club ? 
+  let Old_50$_Record = Get_Record_For_50$_Club == null ? [] : Get_Record_For_50$_Club.Club50Eligible
 
-  await RoyaltyBonusEligible.findByIdAndUpdate({_id:Get_Record_For_50$_Club._id},{Club50Eligible:Old_50$_Record})
+  Old_50$_Record.push({ ids: id })
 
-  :
+  Get_Record_For_50$_Club == null ?
 
-  await RoyaltyBonusEligible.create({Club50Eligible:Old_50$_Record})
- 
+    await RoyaltyBonusEligible.create({ Club50Eligible: Old_50$_Record })
+
+    :
+    await RoyaltyBonusEligible.findByIdAndUpdate({ _id: Get_Record_For_50$_Club._id }, { Club50Eligible: Old_50$_Record })
+
+
+
+
 }
 
 
 // CLUB 100 PEOPLE WILL COME HERE
 
-const Club100 = async(id) =>{
+const Club100 = async (id) => {
   const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
 
- 
-  const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({createdAt: { $gt: fiveMinutesAgo }}).select("_id Club100Eligible").lean().exec()
 
-  let Old_50$_Record = Get_Record_For_50$_Club == null ?  []  :  Get_Record_For_50$_Club.Club100Eligible
+  const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club100Eligible").lean().exec()
 
-  Old_50$_Record.push({ids:id})
+  let Old_50$_Record = Get_Record_For_50$_Club == null ? [] : Get_Record_For_50$_Club.Club100Eligible
 
-  Get_Record_For_50$_Club ? 
+  Old_50$_Record.push({ ids: id })
 
-  await RoyaltyBonusEligible.findByIdAndUpdate({_id:Get_Record_For_50$_Club._id},{Club100Eligible:Old_50$_Record})
+  Get_Record_For_50$_Club ?
 
-  :
+    await RoyaltyBonusEligible.findByIdAndUpdate({ _id: Get_Record_For_50$_Club._id }, { Club100Eligible: Old_50$_Record })
 
-  await RoyaltyBonusEligible.create({Club100Eligible:Old_50$_Record})
+    :
+
+    await RoyaltyBonusEligible.create({ Club100Eligible: Old_50$_Record })
 
 }
 
 
 // CLUB 150 PEOPLE WILL COME HERE
 
-const Club150 = async(id) =>{
+const Club150 = async (id) => {
   const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
 
- 
-  const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({createdAt: { $gt: fiveMinutesAgo }}).select("_id Club150Eligible").lean().exec()
 
-  let Old_50$_Record = Get_Record_For_50$_Club == null ?  []  :  Get_Record_For_50$_Club.Club150Eligible
+  const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club150Eligible").lean().exec()
 
-  Old_50$_Record.push({ids:id})
+  let Old_50$_Record = Get_Record_For_50$_Club == null ? [] : Get_Record_For_50$_Club.Club150Eligible
 
-  Get_Record_For_50$_Club ? 
+  Old_50$_Record.push({ ids: id })
 
-  await RoyaltyBonusEligible.findByIdAndUpdate({_id:Get_Record_For_50$_Club._id},{Club150Eligible:Old_50$_Record})
+  Get_Record_For_50$_Club ?
 
-  :
+    await RoyaltyBonusEligible.findByIdAndUpdate({ _id: Get_Record_For_50$_Club._id }, { Club150Eligible: Old_50$_Record })
 
-  await RoyaltyBonusEligible.create({Club150Eligible:Old_50$_Record})
+    :
+
+    await RoyaltyBonusEligible.create({ Club150Eligible: Old_50$_Record })
 
 }
 
 
 // CLUB 200 PEOPLE WILL COME HERE
 
-const Club200 = async(id) =>{
+const Club200 = async (id) => {
   const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
 
- 
-  const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({createdAt: { $gt: fiveMinutesAgo }}).select("_id Club200Eligible").lean().exec()
 
-  let Old_50$_Record = Get_Record_For_50$_Club == null ?  []  :  Get_Record_For_50$_Club.Club200Eligible
+  const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club200Eligible").lean().exec()
 
-  Old_50$_Record.push({ids:id})
+  let Old_50$_Record = Get_Record_For_50$_Club == null ? [] : Get_Record_For_50$_Club.Club200Eligible
 
-  Get_Record_For_50$_Club ? 
+  Old_50$_Record.push({ ids: id })
 
-  await RoyaltyBonusEligible.findByIdAndUpdate({_id:Get_Record_For_50$_Club._id},{Club200Eligible:Old_50$_Record})
+  Get_Record_For_50$_Club ?
 
-  :
+    await RoyaltyBonusEligible.findByIdAndUpdate({ _id: Get_Record_For_50$_Club._id }, { Club200Eligible: Old_50$_Record })
 
-  await RoyaltyBonusEligible.create({Club200Eligible:Old_50$_Record})
+    :
+
+    await RoyaltyBonusEligible.create({ Club200Eligible: Old_50$_Record })
 
 }
 
 
 // CLUB 500 PEOPLE WILL COME HERE
 
-const Club500 = async(id) =>{
+const Club500 = async (id) => {
   const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
 
- 
-  const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({createdAt: { $gt: fiveMinutesAgo }}).select("_id Club500Eligible").lean().exec()
 
-  let Old_50$_Record = Get_Record_For_50$_Club == null ?  []  :  Get_Record_For_50$_Club.Club500Eligible
+  const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club500Eligible").lean().exec()
 
-  Old_50$_Record.push({ids:id})
+  let Old_50$_Record = Get_Record_For_50$_Club == null ? [] : Get_Record_For_50$_Club.Club500Eligible
 
-  Get_Record_For_50$_Club ? 
+  Old_50$_Record.push({ ids: id })
 
-  await RoyaltyBonusEligible.findByIdAndUpdate({_id:Get_Record_For_50$_Club._id},{Club500Eligible:Old_50$_Record})
+  Get_Record_For_50$_Club ?
 
-  :
+    await RoyaltyBonusEligible.findByIdAndUpdate({ _id: Get_Record_For_50$_Club._id }, { Club500Eligible: Old_50$_Record })
 
-  await RoyaltyBonusEligible.create({Club500Eligible:Old_50$_Record})
+    :
+
+    await RoyaltyBonusEligible.create({ Club500Eligible: Old_50$_Record })
 
 }
 
 // CLUB 1000 PEOPLE WILL COME HERE
 
-const Club1000 = async(id) =>{
- 
+const Club1000 = async (id) => {
+
   const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
 
 
-  const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({createdAt: { $gt: fiveMinutesAgo }}).select("_id Club1000Eligible").lean().exec()
+  const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club1000Eligible").lean().exec()
 
-  let Old_50$_Record = Get_Record_For_50$_Club == null ?  []  :  Get_Record_For_50$_Club.Club1000Eligible
+  let Old_50$_Record = Get_Record_For_50$_Club == null ? [] : Get_Record_For_50$_Club.Club1000Eligible
 
-  Old_50$_Record.push({ids:id})
+  Old_50$_Record.push({ ids: id })
 
-  Get_Record_For_50$_Club ? 
+  Get_Record_For_50$_Club ?
 
-  await RoyaltyBonusEligible.findByIdAndUpdate({_id:Get_Record_For_50$_Club._id},{Club1000Eligible:Old_50$_Record})
+    await RoyaltyBonusEligible.findByIdAndUpdate({ _id: Get_Record_For_50$_Club._id }, { Club1000Eligible: Old_50$_Record })
 
-  :
+    :
 
-  await RoyaltyBonusEligible.create({Club1000Eligible:Old_50$_Record})
+    await RoyaltyBonusEligible.create({ Club1000Eligible: Old_50$_Record })
 
 }
 
@@ -181,105 +188,136 @@ const Club1000 = async(id) =>{
 
 export const RoyaltyBonus = async (req, res) => {
 
-
-
   try {
 
-    const getAllShortRecord = (await ShortRecord.find().select("MyDirectsTotalBusiness RecordOwner MyActivePackages").lean().exec()).map((hit, index) => {
+    const getAllShortRecord = await ShortRecord.find().select("MyDirectsTotalBusiness RecordOwner MyActivePackages").lean().exec()
 
-          
+
+    for (let index = 0; index < getAllShortRecord.length; index++) {
+      const hit = getAllShortRecord[index];
+
+
+
+
 
       // if (hit.MyActivePackages.length == 0) return
 
-      
+
 
       let PackageAmount = Math.max(...hit.MyActivePackages) // Checking User Highest Purchased Package
 
-      
 
-      
+
+
       let This_User_Direct_Business = hit.MyDirectsTotalBusiness // Checking User ALL Direct Businesses
-      
-      
+
+
       // FROM BELOW I AM CHECKING IN WHICH PACKAGE THAT USER EXISTS AND WHAT IS THE DIRECT INCOME
 
 
-        
-      if (This_User_Direct_Business > 5000) {        
+
+      if (This_User_Direct_Business > 5000) {
         if (PackageAmount == 50) {
-          Give_Reward_According_To_Package("50$ CLUB",hit.RecordOwner)
+
+
+          // Give_Reward_According_To_Package("50$ CLUB",hit.RecordOwner)
+        const id = hit.RecordOwner
+
+
+          const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
+
+
+          const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club50Eligible").lean().exec()
+
+
+
+          let Old_50$_Record = Get_Record_For_50$_Club == null ? [] : Get_Record_For_50$_Club.Club50Eligible
+
+          Old_50$_Record.push({ ids: id })
+
+          Get_Record_For_50$_Club == null ?
+
+            await RoyaltyBonusEligible.create({ Club50Eligible: Old_50$_Record })
+
+            :
+            await RoyaltyBonusEligible.findByIdAndUpdate({ _id: Get_Record_For_50$_Club._id }, { Club50Eligible: Old_50$_Record })
+
+
+
+
+
 
         } else if (PackageAmount == 100) {
 
-          Give_Reward_According_To_Package("100$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("100$ CLUB", hit.RecordOwner)
 
-        }else if (PackageAmount == 150) {
+        } else if (PackageAmount == 150) {
 
-          Give_Reward_According_To_Package("150$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("150$ CLUB", hit.RecordOwner)
 
-        }else if (PackageAmount == 200) {
+        } else if (PackageAmount == 200) {
 
-          Give_Reward_According_To_Package("200$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("200$ CLUB", hit.RecordOwner)
 
         }
 
-      } else if (This_User_Direct_Business >= 5000 && This_User_Direct_Business<= 10000) {
+      } else if (This_User_Direct_Business >= 5000 && This_User_Direct_Business <= 10000) {
 
         if (PackageAmount == 50) {
 
-          Give_Reward_According_To_Package("50$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("50$ CLUB", hit.RecordOwner)
 
         } else if (PackageAmount == 100) {
 
-          Give_Reward_According_To_Package("100$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("100$ CLUB", hit.RecordOwner)
 
-        }else if (PackageAmount == 150) {
+        } else if (PackageAmount == 150) {
 
-          Give_Reward_According_To_Package("150$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("150$ CLUB", hit.RecordOwner)
 
-        }else if (PackageAmount == 200) {
+        } else if (PackageAmount == 200) {
 
-          Give_Reward_According_To_Package("200$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("200$ CLUB", hit.RecordOwner)
 
         }
 
-      }else if (This_User_Direct_Business >= 10000 && This_User_Direct_Business<= 15000) {
+      } else if (This_User_Direct_Business >= 10000 && This_User_Direct_Business <= 15000) {
 
         if (PackageAmount == 50) {
 
-          Give_Reward_According_To_Package("50$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("50$ CLUB", hit.RecordOwner)
 
         } else if (PackageAmount == 100) {
 
-          Give_Reward_According_To_Package("100$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("100$ CLUB", hit.RecordOwner)
 
-        }else if (PackageAmount == 150) {
+        } else if (PackageAmount == 150) {
 
-          Give_Reward_According_To_Package("150$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("150$ CLUB", hit.RecordOwner)
 
-        }else if (PackageAmount == 200) {
+        } else if (PackageAmount == 200) {
 
-          Give_Reward_According_To_Package("200$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("200$ CLUB", hit.RecordOwner)
 
         }
 
-      }else if (This_User_Direct_Business >= 15000 && This_User_Direct_Business<= 20000) {
+      } else if (This_User_Direct_Business >= 15000 && This_User_Direct_Business <= 20000) {
 
         if (PackageAmount == 50) {
 
-          Give_Reward_According_To_Package("50$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("50$ CLUB", hit.RecordOwner)
 
         } else if (PackageAmount == 100) {
 
-          Give_Reward_According_To_Package("100$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("100$ CLUB", hit.RecordOwner)
 
-        }else if (PackageAmount == 150) {
+        } else if (PackageAmount == 150) {
 
-          Give_Reward_According_To_Package("150$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("150$ CLUB", hit.RecordOwner)
 
-        }else if (PackageAmount == 200) {
+        } else if (PackageAmount == 200) {
 
-          Give_Reward_According_To_Package("200$ CLUB",hit.RecordOwner)
+          Give_Reward_According_To_Package("200$ CLUB", hit.RecordOwner)
 
         }
 
@@ -287,11 +325,11 @@ export const RoyaltyBonus = async (req, res) => {
 
 
 
-    })
+    }
 
     res.json("done");
   } catch (error) {
-    
+
     res.status(500).json({ message: "Server Error" });
   }
 };
