@@ -27,23 +27,23 @@ const ShortRecord = mongoose.Schema({
         default: 0
     },
     TotalLevelIncome: {
-        type: Number,
+        type: mongoose.Schema.Types.Mixed,
         default: 0
     },
     TotalDailyIncome: {
-        type: Number,
+        type: mongoose.Schema.Types.Mixed,
         default: 0
     },
     TotalDirectIncome: {
-        type: Number,
+        type: mongoose.Schema.Types.Mixed,
         default: 0
     },
     TotalRoyaltyIncome: {
-        type: Number,
+        type: mongoose.Schema.Types.Mixed,
         default: 0
     },
     TotalWithdrawal: {
-        type: Number,
+        type: mongoose.Schema.Types.Mixed,
         default: 0
     },
     MyWalletAddress: {

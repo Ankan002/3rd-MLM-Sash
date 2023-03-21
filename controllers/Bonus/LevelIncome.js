@@ -32,6 +32,8 @@ export const LevelIncome = async (req, res) => {
 
     const FindDailyReward = await DailyReward.find({ createdAt: { $gt: fiveMinutesAgo } }).lean();
 
+
+
     // Going To Map All Daily Reward
 
 
@@ -48,11 +50,14 @@ export const LevelIncome = async (req, res) => {
       // Destructuring All Variables
       const { RecordOwner, CoinEarned } = pkg;
 
+
       // Below will be level distribution logic
       const FindShortRecord = await ShortRecord.findOne({ RecordOwner }).lean()
 
-      const AllMyUpperlines = FindShortRecord.MyAllUpperlines
 
+      
+      const AllMyUpperlines = FindShortRecord.MyAllUpperlines
+      
       for (let index = 0; index < AllMyUpperlines.length; index++) {
 
         const element = AllMyUpperlines[index];
@@ -70,6 +75,9 @@ export const LevelIncome = async (req, res) => {
         })
 
         let largestValue = Math.max(...FindLargeValue);
+
+
+
 
 
         const CheckUserDirects = await ShortRecord.findOne({ RecordOwner: element.id }).lean()
@@ -93,101 +101,107 @@ export const LevelIncome = async (req, res) => {
           return Earnings = Number(Earnings) + Number(hit.CoinEarned)
         })
 
+
+
         if (parseFloat(Earnings).toFixed(2) >= parseFloat(Maximum_For_Today).toFixed(2)) continue
-
-
-        if (DirectNumber > 0 && DirectNumber < 3) {
-          LevelsOpenForThisUser = 1
-          RewardPercentage = 10;
-        } else if (DirectNumber >= 3 && DirectNumber < 5) {
-          LevelsOpenForThisUser = 2
-          RewardPercentage = 10;
-        } else if (DirectNumber >= 5 && DirectNumber < 6) {
-          LevelsOpenForThisUser = 3
-          RewardPercentage = 10;
-        } else if (DirectNumber == 6) {
-          LevelsOpenForThisUser = 4
-          RewardPercentage = 6
-        } else if (DirectNumber == 7) {
-          LevelsOpenForThisUser = 5
-          RewardPercentage = 6
-        } else if (DirectNumber == 8) {
-          LevelsOpenForThisUser = 6
-          RewardPercentage = 2
-        } else if (DirectNumber == 9) {
-          LevelsOpenForThisUser = 7
-          RewardPercentage = 2
-        } else if (DirectNumber == 10) {
-          LevelsOpenForThisUser = 8
-          RewardPercentage = 2
-        }
 
         let Loop_Level = index + 1
 
 
+        if (Loop_Level == 1) {
 
+          if (DirectNumber >= 1) {
+            LevelsOpenForThisUser = 1
+            RewardPercentage = 10;
+          } else {
+            continue
+          }
 
-        if (Loop_Level > LevelsOpenForThisUser) continue
+        }else if (Loop_Level == 2) {
+          if (DirectNumber >= 3) {
+            LevelsOpenForThisUser = 2
+            RewardPercentage = 5;
+          } else {
+            continue
+          }
+        }else{
+          continue
+        }
 
-
-        let MaximuEarningForThisUser = PackageAmount * Number(RewardPercentage) / 100
-
-        let Reward = CoinEarned * RewardPercentage / 100
-
-        let Calculate_Max_Earning = Reward > MaximuEarningForThisUser ? MaximuEarningForThisUser : Reward
-
-        /*
-        ! BELOW I AM MANAGING SHORT RECORD FOR LEVEL INCOME
-        */
-
-        const Get_Short_Record_Of_Level = await ShortRecord.findOne({ RecordOwner: element.id })
-
-        const Level_Record = parseFloat(Get_Short_Record_Of_Level.TotalLevelIncome)
-
+          if (Loop_Level > LevelsOpenForThisUser) continue
 
         
+
         
-        
-        const Update_Value = Level_Record + Calculate_Max_Earning
-        
-        
+          let MaximuEarningForThisUser = PackageAmount * Number(RewardPercentage) / 100
+
+
+          let Latest_Calculation = CoinEarned *  RewardPercentage /100
+
+          let Reward = 0
+
+          let Calculate_Max_Earning = Reward 
+
+          /*
+          ! BELOW I AM MANAGING SHORT RECORD FOR LEVEL INCOME
+          */
+
+          const Get_Short_Record_Of_Level = await ShortRecord.findOne({ RecordOwner: element.id })
+
+          const Level_Record = parseFloat(Get_Short_Record_Of_Level.TotalLevelIncome)
 
 
 
 
 
-        await ShortRecord.findByIdAndUpdate({ _id: Get_Short_Record_Of_Level._id }, { TotalLevelIncome: Update_Value })
-
-        /*
-       ! MANAGING TRANSACTION REPORT
-       */
+          const Update_Value = Level_Record + Latest_Calculation
 
 
+          
+          
+          
+          
+          
+          await ShortRecord.findByIdAndUpdate({ _id: Get_Short_Record_Of_Level._id }, { TotalLevelIncome: Update_Value })
+          console.log("till here")
 
-       TransactionRecipt.create({
-          RecordOwner: element.id,
-          TransactionFrom: "Admin",
-          TransactionTo: element.id,
-          Amount: Number(Calculate_Max_Earning),
-          Remark: `User Got ${Calculate_Max_Earning}$ From Level ${LevelsOpenForThisUser} Income On ${new Date()}`,
-          Method: "CREDIT",
-          TransactionType: "Level Income"
-        })
+          /*
+         ! MANAGING TRANSACTION REPORT
+         */
 
 
-        /*
-        ! CREATING RECORD FOR LEVEL RECORD
-        */
 
-        await LevelReward.create({
+          TransactionRecipt.create({
+            RecordOwner: element.id,
+            TransactionFrom: "Admin",
+            TransactionTo: element.id,
+            Amount: Latest_Calculation,
+            Remark: `User Got ${Latest_Calculation}$ From Level ${LevelsOpenForThisUser} Income On ${new Date()}`,
+            Method: "CREDIT",
+            TransactionType: "Level Income"
+          })
 
-          RecordOwner: element.id,
-          LevelEarned: Loop_Level,
-          CoinEarned: Number(Calculate_Max_Earning).toFixed(2),
-          EarnedPackage: "package name",
-          RewardFrom: RecordOwner
 
-        })
+          /*
+          ! CREATING RECORD FOR LEVEL RECORD
+          */
+
+          await LevelReward.create({
+
+            RecordOwner: element.id,
+            LevelEarned: Loop_Level,
+            CoinEarned:Latest_Calculation,
+            EarnedPackage: "package name",
+            RewardFrom: RecordOwner
+
+          })
+        }
+
+
+
+
+
+
       }
 
 
@@ -195,28 +209,21 @@ export const LevelIncome = async (req, res) => {
 
 
 
+
+
+      /*
+        ! HERE BELOW I AM POSTING TRANSACTION RECORDS FOR LEVEL
+      */
+      // await TransactionRecipt.insertMany(Transaction_Array)
+
+
+      res.json("Cron Job Done :)");
+
+    } catch (error) {
+
+      // If something wrong happend then it will come here
+
+      res.status(500).json({ error: "Something Went Wrong" });
+
     }
-
-
-
-
-    
-
-
-
-    /*
-      ! HERE BELOW I AM POSTING TRANSACTION RECORDS FOR LEVEL
-    */
-    // await TransactionRecipt.insertMany(Transaction_Array)
-
-
-    res.json("Cron Job Done :)");
-
-  } catch (error) {
-
-    // If something wrong happend then it will come here
-
-    res.status(500).json({ error: "Something Went Wrong" });
-
   }
-}
