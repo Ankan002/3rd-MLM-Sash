@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-const url = 'mongodb://localhost:27017/mydatabase';
+const url = 'mongodb+srv://suraj:suraj@cluster0.zekdn7n.mongodb.net/?retryWrites=true&w=majority';
 
 const client = new MongoClient(url, { useUnifiedTopology: true });
 
