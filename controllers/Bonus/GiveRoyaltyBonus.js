@@ -77,7 +77,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
                 RecordOwner:Id,
                 GotReward:Royalty_Reward_Per_Peson,
                 CompanyJoinings:Total_People_In_50_Plan,
-                IncomePerId:"2",
+                IncomePerId:Commison_Added,
                 AchievedMembers:Club50People,
                 ClubRoyality:Total_Royality_Reward,
                 Club:"50$ Club"
@@ -106,7 +106,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
 
         let Total_People_In_100_Plan = Find_All_100_Purchase.length;
 
-        let Commison_Added = 2
+        let Commison_Added = 4
 
         let Total_Royality_Reward = Total_People_In_100_Plan * Commison_Added
 
@@ -119,7 +119,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
                 RecordOwner:Id,
                 GotReward:Royalty_Reward_Per_Peson,
                 CompanyJoinings:Total_People_In_100_Plan,
-                IncomePerId:"2",
+                IncomePerId:Commison_Added,
                 AchievedMembers:Club100People,
                 ClubRoyality:Total_Royality_Reward,
                 Club:"100$ Club"
@@ -149,7 +149,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
 
         let Total_People_In_150_Plan = Find_All_150_Purchase.length;
 
-        let Commison_Added = 2
+        let Commison_Added = 6
 
         let Total_Royality_Reward = Total_People_In_150_Plan * Commison_Added
 
@@ -162,7 +162,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
                 RecordOwner:Id,
                 GotReward:Royalty_Reward_Per_Peson,
                 CompanyJoinings:Total_People_In_150_Plan,
-                IncomePerId:"2",
+                IncomePerId:Commison_Added,
                 AchievedMembers:Club150People,
                 ClubRoyality:Total_Royality_Reward,
                 Club:"150$ Club"
@@ -191,7 +191,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
     
             let Total_People_In_200_Plan = Find_All_200_Purchase.length;
     
-            let Commison_Added = 2
+            let Commison_Added = 8
     
             let Total_Royality_Reward = Total_People_In_200_Plan * Commison_Added
     
@@ -204,7 +204,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
                     RecordOwner:Id,
                     GotReward:Royalty_Reward_Per_Peson,
                     CompanyJoinings:Total_People_In_200_Plan,
-                    IncomePerId:"2",
+                    IncomePerId:Commison_Added,
                     AchievedMembers:Club200People,
                     ClubRoyality:Total_Royality_Reward,
                     Club:"200$ Club"

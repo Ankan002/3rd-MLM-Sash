@@ -46,7 +46,7 @@ const Club50 = async (id) => {
   
 
 
-  const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
+ const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
 
 
   const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club50Eligible").lean().exec()
@@ -73,7 +73,7 @@ const Club50 = async (id) => {
 // CLUB 100 PEOPLE WILL COME HERE
 
 const Club100 = async (id) => {
-  const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
+ const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
 
 
   const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club100Eligible").lean().exec()
@@ -96,7 +96,7 @@ const Club100 = async (id) => {
 // CLUB 150 PEOPLE WILL COME HERE
 
 const Club150 = async (id) => {
-  const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
+ const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
 
 
   const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club150Eligible").lean().exec()
@@ -119,7 +119,7 @@ const Club150 = async (id) => {
 // CLUB 200 PEOPLE WILL COME HERE
 
 const Club200 = async (id) => {
-  const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
+ const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
 
 
   const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club200Eligible").lean().exec()
@@ -142,7 +142,7 @@ const Club200 = async (id) => {
 // CLUB 500 PEOPLE WILL COME HERE
 
 const Club500 = async (id) => {
-  const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
+ const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
 
 
   const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club500Eligible").lean().exec()
@@ -165,7 +165,7 @@ const Club500 = async (id) => {
 
 const Club1000 = async (id) => {
 
-  const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
+ const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
 
 
   const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club1000Eligible").lean().exec()
@@ -224,7 +224,7 @@ export const RoyaltyBonus = async (req, res) => {
         const id = hit.RecordOwner
 
 
-          const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+          const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
 
 
           console.log(fiveMinutesAgo)
@@ -252,7 +252,26 @@ export const RoyaltyBonus = async (req, res) => {
 
         } else if (PackageAmount == 100) {
 
-          Give_Reward_According_To_Package("100$ CLUB", hit.RecordOwner)
+          // Give_Reward_According_To_Package("100$ CLUB", hit.RecordOwner)
+
+          let id = hit.RecordOwner
+
+         const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
+
+
+          const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club100Eligible").lean().exec()
+        
+          let Old_50$_Record = Get_Record_For_50$_Club == null ? [] : Get_Record_For_50$_Club.Club100Eligible
+        
+          Old_50$_Record.push({ ids: id })
+        
+          Get_Record_For_50$_Club ?
+        
+            await RoyaltyBonusEligible.findByIdAndUpdate({ _id: Get_Record_For_50$_Club._id }, { Club100Eligible: Old_50$_Record })
+        
+            :
+        
+            await RoyaltyBonusEligible.create({ Club100Eligible: Old_50$_Record })
 
         } else if (PackageAmount == 150) {
 
@@ -265,14 +284,61 @@ export const RoyaltyBonus = async (req, res) => {
         }
 
       } else if (This_User_Direct_Business >= 5000 && This_User_Direct_Business <= 10000) {
-
         if (PackageAmount == 50) {
 
-          Give_Reward_According_To_Package("50$ CLUB", hit.RecordOwner)
+
+          // Give_Reward_According_To_Package("50$ CLUB",hit.RecordOwner)
+        const id = hit.RecordOwner
+
+
+          const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
+
+
+          console.log(fiveMinutesAgo)
+
+
+          const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club50Eligible").lean().exec()
+
+          
+
+          let Old_50$_Record = Get_Record_For_50$_Club == null ? [] : Get_Record_For_50$_Club.Club50Eligible
+
+          Old_50$_Record.push({ ids: id })
+
+          Get_Record_For_50$_Club == null ?
+
+            await RoyaltyBonusEligible.create({ Club50Eligible: Old_50$_Record })
+
+            :
+            await RoyaltyBonusEligible.findByIdAndUpdate({ _id: Get_Record_For_50$_Club._id }, { Club50Eligible: Old_50$_Record })
+
+
+
+
+
 
         } else if (PackageAmount == 100) {
 
-          Give_Reward_According_To_Package("100$ CLUB", hit.RecordOwner)
+          // Give_Reward_According_To_Package("100$ CLUB", hit.RecordOwner)
+
+          let id = hit.RecordOwner
+
+         const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
+
+
+          const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club100Eligible").lean().exec()
+        
+          let Old_50$_Record = Get_Record_For_50$_Club == null ? [] : Get_Record_For_50$_Club.Club100Eligible
+        
+          Old_50$_Record.push({ ids: id })
+        
+          Get_Record_For_50$_Club ?
+        
+            await RoyaltyBonusEligible.findByIdAndUpdate({ _id: Get_Record_For_50$_Club._id }, { Club100Eligible: Old_50$_Record })
+        
+            :
+        
+            await RoyaltyBonusEligible.create({ Club100Eligible: Old_50$_Record })
 
         } else if (PackageAmount == 150) {
 
