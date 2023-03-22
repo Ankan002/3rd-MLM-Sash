@@ -43,7 +43,7 @@ function Give_Reward_According_To_Package(ClubName, id) {
 
 const Club50 = async (id) => {
 
-  console.log(id)
+  
 
 
   const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
@@ -191,7 +191,7 @@ export const RoyaltyBonus = async (req, res) => {
   try {
 
     const getAllShortRecord = await ShortRecord.find().select("MyDirectsTotalBusiness RecordOwner MyActivePackages").lean().exec()
-
+ 
 
     for (let index = 0; index < getAllShortRecord.length; index++) {
       const hit = getAllShortRecord[index];
@@ -224,12 +224,15 @@ export const RoyaltyBonus = async (req, res) => {
         const id = hit.RecordOwner
 
 
-          const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
+          const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+
+
+          console.log(fiveMinutesAgo)
 
 
           const Get_Record_For_50$_Club = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).select("_id Club50Eligible").lean().exec()
 
-
+          
 
           let Old_50$_Record = Get_Record_For_50$_Club == null ? [] : Get_Record_For_50$_Club.Club50Eligible
 
