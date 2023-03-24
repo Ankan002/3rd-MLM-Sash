@@ -1,6 +1,7 @@
 import dbMongoose from "../../config/dbMongoose.js";
 import ShortRecord from "../../modal/ShortRecord.js";
 import RoyaltyBonusEligible from "../../modal/RoyaltyBonus/RoyaltyBonusEligible.js";
+import PlanRecord from "../../modal/Record/PlanRecord.js";
 
 // Calling Database
 dbMongoose();
@@ -202,9 +203,19 @@ export const RoyaltyBonus = async (req, res) => {
 
       // if (hit.MyActivePackages.length == 0) return
 
+      let All_Active_Packages = []
 
 
-      let PackageAmount = Math.max(...hit.MyActivePackages) // Checking User Highest Purchased Package
+      const FindActivePackages = await PlanRecord.find({RecordOwner:hit.RecordOwner})
+
+      FindActivePackages.map((hit)=>{
+        if (hit.Type == "Repurchased") return
+        All_Active_Packages.push(Number(hit.PackagePrice))
+      })
+
+
+
+      let PackageAmount = Math.max(...All_Active_Packages) // Checking User Highest Purchased Package
 
 
 
