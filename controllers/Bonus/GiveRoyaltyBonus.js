@@ -70,7 +70,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
 
         for (let index = 0; index < FindRecords.Club50Eligible.length; index++) {
 
-            console.log(FindRecords.Club50Eligible[index])
+            
             const Id = FindRecords.Club50Eligible[index].ids
 
 
@@ -147,6 +147,19 @@ export const GiveRoyaltyBonus = async (req, res) => {
                 TransactionType: "Royalty Bonus"
             })
 
+
+
+                        /*
+            ! CREATING SHORT RECORD FOR THIS RECORD
+            */
+
+            const Find_Short_Records = await ShortRecord.findOne({ RecordOwner: Id }).lean()
+
+            let Calculated = Number(Find_Short_Records.TotalRoyaltyIncome) + Number(Royalty_Reward_Per_Peson)
+
+            await ShortRecord.findByIdAndUpdate({ _id: Find_Short_Records._id }, { TotalRoyaltyIncome: Calculated })
+
+
         }
     }
 
@@ -190,6 +203,17 @@ export const GiveRoyaltyBonus = async (req, res) => {
                 TransactionType: "Royalty Bonus"
             })
 
+            /*
+            ! CREATING SHORT RECORD FOR THIS RECORD
+            */
+
+            const Find_Short_Records = await ShortRecord.findOne({ RecordOwner: Id }).lean()
+
+            let Calculated = Number(Find_Short_Records.TotalRoyaltyIncome) + Number(Royalty_Reward_Per_Peson)
+
+            await ShortRecord.findByIdAndUpdate({ _id: Find_Short_Records._id }, { TotalRoyaltyIncome: Calculated })
+
+
         }
     }
 
@@ -230,6 +254,17 @@ export const GiveRoyaltyBonus = async (req, res) => {
                 Method: "CREDIT",
                 TransactionType: "Royalty Bonus"
             })
+
+            /*
+            ! CREATING SHORT RECORD FOR THIS RECORD
+            */
+
+            const Find_Short_Records = await ShortRecord.findOne({ RecordOwner: Id }).lean()
+
+            let Calculated = Number(Find_Short_Records.TotalRoyaltyIncome) + Number(Royalty_Reward_Per_Peson)
+
+            await ShortRecord.findByIdAndUpdate({ _id: Find_Short_Records._id }, { TotalRoyaltyIncome: Calculated })
+
 
         }
     }
