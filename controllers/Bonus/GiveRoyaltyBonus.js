@@ -29,7 +29,7 @@ export const GiveRoyaltyBonus = async (req, res) => {
 
 
 
-    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000); // for 5 minutes
+    const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 5 minutes
 
     const FindRecords = await RoyaltyBonusEligible.findOne({ createdAt: { $gt: fiveMinutesAgo } }).lean().exec();
 

@@ -25,9 +25,7 @@ export const LevelIncome = async (req, res) => {
     // we need to take one globaltime  = in system u need to set 12:00  
     //all deposits in 12:00 - 12:05
     // 12:05 - 12:10
-    const tenMinutesAgo = new Date(Date.now() - 50 * 60 * 1000); // calculating a Date object for 10 minutes ago
-    // const oneMinuteAgo = new Date(Date.now() - 1 * 60 * 1000); // calculating a Date object for 1 minute ago
-    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000); // for 5 minutes
+    const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 1 Hour
 
 
     const FindDailyReward = await DailyReward.find({ createdAt: { $gt: fiveMinutesAgo } }).lean();
@@ -124,9 +122,53 @@ export const LevelIncome = async (req, res) => {
           } else {
             continue
           }
+        }else if (Loop_Level == 3) {
+          if (DirectNumber >= 5) {
+            LevelsOpenForThisUser = 3
+            RewardPercentage = 10;
+          } else {
+            continue
+          }
+        }else if (Loop_Level == 4) {
+          if (DirectNumber >= 6) {
+            LevelsOpenForThisUser = 4
+            RewardPercentage = 6;
+          } else {
+            continue
+          }
+        }else if (Loop_Level == 5) {
+          if (DirectNumber >= 7) {
+            LevelsOpenForThisUser = 5
+            RewardPercentage = 6;
+          } else {
+            continue
+          }
+        }else if (Loop_Level == 6) {
+          if (DirectNumber >= 8) {
+            LevelsOpenForThisUser = 6
+            RewardPercentage = 2;
+          } else {
+            continue
+          }
+        }else if (Loop_Level == 7) {
+          if (DirectNumber >= 9) {
+            LevelsOpenForThisUser = 7
+            RewardPercentage = 2;
+          } else {
+            continue
+          }
+        }else if (Loop_Level == 8) {
+          if (DirectNumber >= 10) {
+            LevelsOpenForThisUser = 8
+            RewardPercentage = 2;
+          } else {
+            continue
+          }
         }else{
           continue
         }
+        
+        
 
           if (Loop_Level > LevelsOpenForThisUser) continue
 
