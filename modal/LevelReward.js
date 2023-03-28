@@ -7,6 +7,11 @@ const LevelReward = mongoose.Schema({
         required: false,
         default:"null"
     },
+    RecordUser: {
+        type: String,
+        required: false,
+        default:"null"
+    },
     LevelEarned: {
         type: String,
         required: false,
@@ -31,4 +36,4 @@ const LevelReward = mongoose.Schema({
     {
         timestamps: true
     })
-export default mongoose.models.LevelReward || mongoose.model('LevelReward', LevelReward)
+export default mongoose.models.LevelRewards || mongoose.model('LevelRewards', LevelReward)

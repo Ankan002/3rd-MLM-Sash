@@ -4,6 +4,7 @@ import LevelReward from "../../modal/LevelReward.js"
 import ShortRecord from "../../modal/ShortRecord.js"
 import PlanRecord from "../../modal/Record/PlanRecord.js"
 import TransactionRecipt from "../../modal/TransactionRecord/TransactionRecipt.js";
+import User from "../../modal/User.js";
 
 // Calling Database
 
@@ -13,28 +14,11 @@ export const LevelIncome = async (req, res) => {
 
   let Transaction_Array = []
 
-
   try {
 
-    // Finding Daily Reward Document
-
-    // const FindDailyReward = await DailyReward.find({ createdAt: { $gte: today } }).lean();
-    // const FindDailyReward = await DailyReward.find().lean();
-    // deposited = 10clock : 10:5
-    // 2ndeposied = 10:4  : 10:8  
-    // we need to take one globaltime  = in system u need to set 12:00  
-    //all deposits in 12:00 - 12:05
-    // 12:05 - 12:10
-    const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 1 Hour
-
+    const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000); // for 1 Hour
 
     const FindDailyReward = await DailyReward.find({ createdAt: { $gt: fiveMinutesAgo } }).lean();
-
-
-
-    // Going To Map All Daily Reward
-
-
 
     for (let index = 0; index < FindDailyReward.length; index++) {
       const pkg = FindDailyReward[index];
@@ -44,15 +28,11 @@ export const LevelIncome = async (req, res) => {
         continue;
       }
 
-
       // Destructuring All Variables
       const { RecordOwner, CoinEarned } = pkg;
 
-
       // Below will be level distribution logic
       const FindShortRecord = await ShortRecord.findOne({ RecordOwner }).lean()
-
-
       
       const AllMyUpperlines = FindShortRecord.MyAllUpperlines
       
@@ -73,10 +53,6 @@ export const LevelIncome = async (req, res) => {
         })
 
         let largestValue = Math.max(...FindLargeValue);
-
-
-
-
 
         const CheckUserDirects = await ShortRecord.findOne({ RecordOwner: element.id }).lean()
 
@@ -118,7 +94,7 @@ export const LevelIncome = async (req, res) => {
         }else if (Loop_Level == 2) {
           if (DirectNumber >= 3) {
             LevelsOpenForThisUser = 2
-            RewardPercentage = 5;
+            RewardPercentage = 10;
           } else {
             continue
           }
@@ -169,12 +145,8 @@ export const LevelIncome = async (req, res) => {
         }
         
         
-
           if (Loop_Level > LevelsOpenForThisUser) continue
 
-        
-
-        
           let MaximuEarningForThisUser = PackageAmount * Number(RewardPercentage) / 100
 
 
@@ -192,26 +164,15 @@ export const LevelIncome = async (req, res) => {
 
           const Level_Record = parseFloat(Get_Short_Record_Of_Level.TotalLevelIncome)
 
-
-
-
-
           const Update_Value = Level_Record + Latest_Calculation
 
-
-          
-          
-          
-          
-          
           await ShortRecord.findByIdAndUpdate({ _id: Get_Short_Record_Of_Level._id }, { TotalLevelIncome: Update_Value })
-          console.log("till here")
+          
+          const Find_Main_User = await User.findById(element.id)
 
           /*
          ! MANAGING TRANSACTION REPORT
          */
-
-
 
           TransactionRecipt.create({
             RecordOwner: element.id,
@@ -234,7 +195,8 @@ export const LevelIncome = async (req, res) => {
             LevelEarned: Loop_Level,
             CoinEarned:Latest_Calculation,
             EarnedPackage: "package name",
-            RewardFrom: RecordOwner
+            RewardFrom: RecordOwner,
+            RecordUser:Find_Main_User.SponserCode
 
           })
         }
