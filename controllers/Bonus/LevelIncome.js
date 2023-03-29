@@ -65,8 +65,8 @@ export const LevelIncome = async (req, res) => {
         let LevelsOpenForThisUser = 0
 
         // let Maximum_For_Today = 0.5
-        let Maximum_For_Today = largestValue * 10 / 100
-
+        let Maximum_For_Today = largestValue * 10 / 100 // => 10
+        console.log("Maximum_For_Today => "+ Maximum_For_Today)
         let Earnings = 0
 
         let Find_Today_Level_Earning_Of_This_User = await LevelReward.find({ RecordOwner: element.id, createdAt: { $gt: fiveMinutesAgo } })
@@ -75,9 +75,11 @@ export const LevelIncome = async (req, res) => {
           return Earnings = Number(Earnings) + Number(hit.CoinEarned)
         })
 
+        console.log("My Tooday Earnig Earnings => "+Earnings)
 
 
-        if (parseFloat(Earnings).toFixed(2) >= parseFloat(Maximum_For_Today).toFixed(2)) continue
+
+        if (Earnings >= Maximum_For_Today) continue
 
         let Loop_Level = index + 1
 
