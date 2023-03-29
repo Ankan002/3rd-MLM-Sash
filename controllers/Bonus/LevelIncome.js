@@ -1,5 +1,5 @@
 import dbMongoose from "../../config/dbMongoose.js"
-import DailyReward from "../../modal/DailyReward.js";
+import DailyReward from "../../modal/DailyShortReward.js";
 import LevelReward from "../../modal/LevelReward.js"
 import ShortRecord from "../../modal/ShortRecord.js"
 import PlanRecord from "../../modal/Record/PlanRecord.js"
@@ -13,10 +13,11 @@ dbMongoose()
 export const LevelIncome = async (req, res) => {
 
   let Transaction_Array = []
+  let Level_Array = []
 
   try {
 
-    const fiveMinutesAgo = new Date(Date.now() - 2 * 60 * 1000); // for 1 Hour
+    const fiveMinutesAgo = new Date(Date.now() - 60 * 60 * 1000); // for 2 min
 
     const FindDailyReward = await DailyReward.find({ createdAt: { $gt: fiveMinutesAgo } }).lean();
 
@@ -33,9 +34,9 @@ export const LevelIncome = async (req, res) => {
 
       // Below will be level distribution logic
       const FindShortRecord = await ShortRecord.findOne({ RecordOwner }).lean()
-      
+
       const AllMyUpperlines = FindShortRecord.MyAllUpperlines
-      
+
       for (let index = 0; index < AllMyUpperlines.length; index++) {
 
         const element = AllMyUpperlines[index];
@@ -145,8 +146,8 @@ export const LevelIncome = async (req, res) => {
         }else{
           continue
         }
-        
-        
+
+
           if (Loop_Level > LevelsOpenForThisUser) continue
 
           let MaximuEarningForThisUser = PackageAmount * Number(RewardPercentage) / 100
@@ -169,14 +170,14 @@ export const LevelIncome = async (req, res) => {
           const Update_Value = Level_Record + Latest_Calculation
 
           await ShortRecord.findByIdAndUpdate({ _id: Get_Short_Record_Of_Level._id }, { TotalLevelIncome: Update_Value })
-          
+
           const Find_Main_User = await User.findById(element.id)
 
           /*
          ! MANAGING TRANSACTION REPORT
          */
 
-          TransactionRecipt.create({
+          Transaction_Array.push({
             RecordOwner: element.id,
             TransactionFrom: "Admin",
             TransactionTo: element.id,
@@ -191,36 +192,23 @@ export const LevelIncome = async (req, res) => {
           ! CREATING RECORD FOR LEVEL RECORD
           */
 
-          await LevelReward.create({
-
+          Level_Array.push({
             RecordOwner: element.id,
             LevelEarned: Loop_Level,
             CoinEarned:Latest_Calculation,
             EarnedPackage: "package name",
             RewardFrom: RecordOwner,
             RecordUser:Find_Main_User.SponserCode
-
           })
         }
 
-
-
-
-
-
       }
-
-
-
-
-
-
-
 
       /*
         ! HERE BELOW I AM POSTING TRANSACTION RECORDS FOR LEVEL
       */
-      // await TransactionRecipt.insertMany(Transaction_Array)
+      await TransactionRecipt.insertMany(Transaction_Array)
+      await LevelReward.insertMany(Level_Array)
 
 
       res.json("Cron Job Done :)");

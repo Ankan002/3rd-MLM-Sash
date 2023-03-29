@@ -3,6 +3,7 @@ import PlanInvoice from "../../modal/Record/PlanRecord.js";
 import DailyReward from "../../modal/DailyReward.js";
 import TransactionRecipt from "../../modal/TransactionRecord/TransactionRecipt.js";
 import ShortRecord from "../../modal/ShortRecord.js"
+import DailyShortReward from "../../modal/DailyShortReward.js"
 
 
 dbMongoose();
@@ -18,7 +19,11 @@ export const DailyBonus = async (req, res) => {
     // Finding Plan Invoices
     const allPackages = await PlanInvoice.find().lean();
 
-    for (const pkg of allPackages) {
+    // for (const pkg of allPackages) {
+
+      for (let index = 0; index < allPackages.length; index++) {
+        const pkg = allPackages[index];
+      
 
       const price = Number(pkg.PackagePrice);
       const percentage = pkg.DailyReward;
@@ -43,6 +48,35 @@ export const DailyBonus = async (req, res) => {
         CoinPercentage: percentage,
         RecordUpperline: pkg.OwnerUpperline
       });
+
+      const Get_Daily_Short_Reward = await DailyShortReward.findOne({RecordOwner:pkg.RecordOwner}).lean();
+
+
+      
+
+      if (!Get_Daily_Short_Reward) {
+
+        
+        
+        await DailyShortReward.create({
+          RecordOwner: pkg.RecordOwner,
+          StakedPackage: price,
+          CoinEarned: calculateReward,
+          CoinPercentage: percentage,
+          RecordUpperline: pkg.OwnerUpperline
+        })
+        
+      }else{
+        
+        console.log("price => "+calculateReward)
+        console.log("CoinEarned => "+Get_Daily_Short_Reward.CoinEarned)
+        let nums = Number(calculateReward)+Number(Get_Daily_Short_Reward.CoinEarned)
+
+        await DailyShortReward.findByIdAndUpdate({_id:Get_Daily_Short_Reward._id},{CoinEarned:nums})
+
+      }
+
+
     }
     
     /*

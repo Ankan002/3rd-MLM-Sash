@@ -1,3 +1,3 @@
 export const DB_NAME = "";
 export const EXTERNAL_URL = "";
-export const MONGODB_URI = "mongodb+srv://suraj:suraj@cluster0.zekdn7n.mongodb.net/?retryWrites=true&w=majority";
+export const MONGODB_URI = "mongodb+srv://igoldtestoptimize:N4yxRZZxGwg5vbYi@cluster0.nhkftdp.mongodb.net/?retryWrites=true&w=majority";
