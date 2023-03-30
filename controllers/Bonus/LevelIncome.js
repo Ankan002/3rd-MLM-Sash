@@ -150,8 +150,7 @@ export const LevelIncome = async (req, res) => {
 
           if (Loop_Level > LevelsOpenForThisUser) continue
 
-          let MaximuEarningForThisUser = PackageAmount * Number(RewardPercentage) / 100
-
+          let MaximumEarningForThisUser = PackageAmount * Number(RewardPercentage) / 100
 
           let Latest_Calculation = CoinEarned *  RewardPercentage /100
 
@@ -195,7 +194,7 @@ export const LevelIncome = async (req, res) => {
           Level_Array.push({
             RecordOwner: element.id,
             LevelEarned: Loop_Level,
-            CoinEarned:Latest_Calculation,
+            CoinEarned: (Latest_Calculation > Maximum_For_Today) ? Maximum_For_Today : Latest_Calculation,
             EarnedPackage: "package name",
             RewardFrom: RecordOwner,
             RecordUser:Find_Main_User.SponserCode
