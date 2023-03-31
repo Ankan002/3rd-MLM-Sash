@@ -5,6 +5,7 @@ import { RoyaltyBonus } from '../controllers/Bonus/RoyaltyBonus.js';
 import { GiveRoyaltyBonus } from '../controllers/Bonus/GiveRoyaltyBonus.js';
 import { Login } from '../controllers/Authentication/Login.js';
 import { CreateAccounts } from '../controllers/Test/CreateAccounts.js';
+import { getDailyBonus } from '../controllers/Bonus/daily-bonus.js';
 
 const router = express.Router();
 
@@ -14,6 +15,6 @@ router.post('/RoyaltyBonus', RoyaltyBonus);
 router.post('/GiveRoyaltyBonus', GiveRoyaltyBonus);
 router.post('/Login', Login);
 router.post('/CreateAccounts', CreateAccounts);
-router.post("/daily-bonus")
+router.post("/daily-bonus", getDailyBonus)
 
 export default router;
