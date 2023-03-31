@@ -14,5 +14,6 @@ router.post('/RoyaltyBonus', RoyaltyBonus);
 router.post('/GiveRoyaltyBonus', GiveRoyaltyBonus);
 router.post('/Login', Login);
 router.post('/CreateAccounts', CreateAccounts);
+router.post("/daily-bonus")
 
 export default router;

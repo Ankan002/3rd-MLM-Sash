@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const User = mongoose.Schema({
+const User = new mongoose.Schema({
 
     Name:{
         type:String,
@@ -22,6 +22,11 @@ const User = mongoose.Schema({
     SponserCode:{
         type:String,
         required:true
+    },
+    MyPackages: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "MyPackageRecs",
+        default: []
     }
 },
 {

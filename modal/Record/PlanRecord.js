@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
-const PackageRecord = mongoose.Schema({
+const PackageRecord = new mongoose.Schema({
 
     RecordOwner: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "MyUse",
         required: true
     },
     OwnerUsername: {
