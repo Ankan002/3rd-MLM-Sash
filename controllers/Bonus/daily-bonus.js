@@ -2,7 +2,7 @@ import PlanRecord from "../../modal/Record/PlanRecord";
 
 export const getDailyBonus = async (req, res) => {
     try {
-        const records = await PlanRecord.find().select("_id");
+        const records = await PlanRecord.find();
 
         records.map((record) => {
             fetch("http://localhost:3000/api/test", {
@@ -11,7 +11,7 @@ export const getDailyBonus = async (req, res) => {
                     "content-type": "application/json",
                 },
                 body: JSON.stringify({
-                    id: record._id,
+                    pkg: record,
                 }),
             });
         });
